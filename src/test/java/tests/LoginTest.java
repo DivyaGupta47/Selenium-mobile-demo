@@ -3,6 +3,7 @@ package tests;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,8 +15,16 @@ public class LoginTest {
 
     @BeforeClass
     public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+    	WebDriverManager.chromedriver().setup();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");  //  Required for GitHub Actions
+        options.addArguments("--no-sandbox");  //  Prevents crashing in CI
+        options.addArguments("--disable-dev-shm-usage");  //  Prevents memory issues
+        options.addArguments("--disable-gpu");  //  Optional but safe
+        options.addArguments("--remote-allow-origins=*");
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://freetrial-mf.kestrelpro.ai/");
         loginPage = new LoginPage(driver);
