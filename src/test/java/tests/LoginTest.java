@@ -25,6 +25,7 @@ public class LoginTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://freetrial-mf.kestrelpro.ai/");
         loginPage = new LoginPage(driver);

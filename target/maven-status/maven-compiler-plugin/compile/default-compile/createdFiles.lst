@@ -1,1 +1,6 @@
+base\BasePage.class
+pages\CreateOrderPage.class
+pages\DashboardPage.class
+pages\ProductFlowQueuedPage.class
+pages\MyTaskFlowAssigneePage.class
 pages\LoginPage.class

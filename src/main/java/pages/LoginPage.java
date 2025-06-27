@@ -16,6 +16,15 @@ public class LoginPage {
 
     @FindBy(xpath = "//button[@type='submit' and text()='Sign in with password']")
     WebElement signInButton;
+    
+    @FindBy(xpath = "//div[text()='DA']")
+    WebElement profileButtonAdmin;
+    
+    @FindBy(xpath = "//div[text()='DG']")
+    WebElement profileButtonAsignee;
+    
+    @FindBy(xpath = "//li[@role='menuitem' and contains(., 'Log Out')]")
+    WebElement signOutButton;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -27,5 +36,29 @@ public class LoginPage {
         passwordField.sendKeys(password);
         Thread.sleep(500);
         signInButton.click();
-    }   
+    }  
+    
+    // Actions
+    public void enterUsername(String username) {
+        usernameField.sendKeys(username);
+    }
+
+    public void enterPassword(String password) {
+        passwordField.sendKeys(password);
+    }
+
+    public void clickSignIn() {
+        signInButton.click();
+    }
+    
+   
+    public void signOutAdmin() {
+    	profileButtonAdmin.click();
+    	signOutButton.click();
+    }
+    
+    public void signOutAsignee() {
+    	profileButtonAsignee.click();
+    	signOutButton.click();
+    }
 }

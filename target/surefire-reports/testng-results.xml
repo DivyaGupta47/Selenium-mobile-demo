@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-06-27T12:15:41 IST" name="Login Test Suite" finished-at="2025-06-27T12:15:52 IST" duration-ms="11422">
+  <suite started-at="2025-06-27T14:47:22 IST" name="Login Test Suite" finished-at="2025-06-27T14:49:42 IST" duration-ms="140714">
     <groups>
     </groups>
-    <test started-at="2025-06-27T12:15:41 IST" name="Login Test" finished-at="2025-06-27T12:15:52 IST" duration-ms="11422">
-      <class name="tests.LoginTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.LoginTest@6aba2b86]" started-at="2025-06-27T12:15:41 IST" name="setup" finished-at="2025-06-27T12:15:44 IST" duration-ms="3859" status="PASS">
+    <test started-at="2025-06-27T14:47:22 IST" name="Login Test" finished-at="2025-06-27T14:49:42 IST" duration-ms="140714">
+      <class name="tests.CreateOrderTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:47:22 IST" name="setUp" finished-at="2025-06-27T14:47:26 IST" duration-ms="4487" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="testLogin()[pri:0, instance:tests.LoginTest@6aba2b86]" started-at="2025-06-27T12:15:44 IST" name="testLogin" finished-at="2025-06-27T12:15:51 IST" duration-ms="6777" status="PASS">
+        </test-method> <!-- setUp -->
+        <test-method signature="testFillNewOrderAndCancelviaAdmin()[pri:1, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:47:26 IST" name="testFillNewOrderAndCancelviaAdmin" finished-at="2025-06-27T14:48:53 IST" duration-ms="87221" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testLogin -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.LoginTest@6aba2b86]" started-at="2025-06-27T12:15:51 IST" name="tearDown" finished-at="2025-06-27T12:15:52 IST" duration-ms="711" status="PASS">
+        </test-method> <!-- testFillNewOrderAndCancelviaAdmin -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:48:53 IST" name="tearDown" finished-at="2025-06-27T14:48:54 IST" duration-ms="867" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- tests.LoginTest -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:48:54 IST" name="setUp" finished-at="2025-06-27T14:48:57 IST" duration-ms="2963" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="assigneeFlow()[pri:2, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:48:57 IST" name="assigneeFlow" finished-at="2025-06-27T14:49:42 IST" duration-ms="44172" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- assigneeFlow -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.CreateOrderTest@291ae]" started-at="2025-06-27T14:49:42 IST" name="tearDown" finished-at="2025-06-27T14:49:42 IST" duration-ms="927" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- tests.CreateOrderTest -->
     </test> <!-- Login Test -->
   </suite> <!-- Login Test Suite -->
 </testng-results>
