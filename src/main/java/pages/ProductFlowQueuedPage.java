@@ -135,7 +135,7 @@ public class ProductFlowQueuedPage extends BasePage {
 			}
 		}
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		clickElement(remarksIcon);
 		Thread.sleep(1000);
 		remarkInput.clear();
@@ -143,7 +143,7 @@ public class ProductFlowQueuedPage extends BasePage {
 		sendBtn.click();
 		System.out.println("Remark sent");
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		clickElement(attachIcon);
 		Thread.sleep(1000);
 		attachInput.clear();
