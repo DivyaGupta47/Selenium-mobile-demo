@@ -1,9 +1,9 @@
 name: Run TestNG Tests
 
 on:
+  workflow_dispatch:   # Manual trigger
   schedule:
-    - cron: '30 4 * * *'  # 10:00 AM IST (UTC+5:30)
-  workflow_dispatch:
+    - cron: '30 4 * * *'  # Runs at 10:00 AM IST (4:30 AM UTC)
 
 jobs:
   test:
@@ -13,45 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Java 21
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
-
-      - name: Set CHROME_BIN environment variable
-        run: echo "CHROME_BIN=$(which chrome)" >> $GITHUB_ENV
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Run Maven Tests
+      - name: Build and Run Tests
         run: mvn clean test -Dsurefire.useFile=false -Dsurefire.printSummary=true
 
-      - name: Show Console Logs
-        run: cat target/surefire-reports/*.txt
-
-      - name: Print TestNG Summary
-        run: |
-          echo "## ✅ TestNG Summary Report" >> $GITHUB_STEP_SUMMARY
-          PASSED=$(grep -oP '(?<=Tests run: )\d+(?=, Failures: 0, Errors: 0)' target/surefire-reports/*.txt | wc -l)
-          FAILED=$(grep -c "Failures: [1-9]" target/surefire-reports/*.txt)
-          SKIPPED=$(grep -c "Skipped: [1-9]" target/surefire-reports/*.txt)
-
-          echo "Passed: $PASSED" >> $GITHUB_STEP_SUMMARY
-          echo "Failed: $FAILED" >> $GITHUB_STEP_SUMMARY
-          echo "Skipped: $SKIPPED" >> $GITHUB_STEP_SUMMARY
-
-      - name: Upload TestNG Reports
+      - name: Upload TestNG Reports (optional)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: testng-reports
-          path: target/surefire-reports
+          path: target/surefire-reports/
+
+      - name: Print test summary if exists
+        if: always()
+        run: |
+          if ls target/surefire-reports/*.txt 1> /dev/null 2>&1; then
+            cat target/surefire-reports/*.txt
+          else
+            echo "✅ All output printed inline. No .txt report found."
+          fi
