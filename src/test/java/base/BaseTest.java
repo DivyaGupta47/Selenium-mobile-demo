@@ -28,8 +28,8 @@ public class BaseTest {
         options.addArguments("--disable-gpu");  //  Optional but safe
         options.addArguments("--remote-allow-origins=*");
         
-       // driver = new ChromeDriver(options);
-        driver = new ChromeDriver();
+       driver = new ChromeDriver(options);
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://freetrial-mf.kestrelpro.ai/");
     }
