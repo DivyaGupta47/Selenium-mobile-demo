@@ -1,7 +1,7 @@
 name: Run TestNG Tests
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   test:
@@ -19,6 +19,25 @@ jobs:
 
       - name: Build & Run Tests
         run: mvn clean test
+
+      - name: Print Test Summary to Logs
+        if: always()
+        run: |
+          echo "===== ✅ Test Summary (.txt) ====="
+          cat target/surefire-reports/*.txt || echo "No summary .txt found"
+          echo "===== ✅ XML Summary (.xml) ====="
+          cat target/surefire-reports/testng-results.xml || echo "No testng-results.xml found"
+
+      - name: GitHub Actions Summary Output
+        if: always()
+        run: |
+          echo "## ✅ TestNG Summary Report" >> $GITHUB_STEP_SUMMARY
+          PASSED=$(grep -o 'testcase status="PASS"' target/surefire-reports/testng-results.xml | wc -l)
+          FAILED=$(grep -o 'testcase status="FAIL"' target/surefire-reports/testng-results.xml | wc -l)
+          SKIPPED=$(grep -o 'testcase status="SKIP"' target/surefire-reports/testng-results.xml | wc -l)
+          echo "**Passed:** $PASSED" >> $GITHUB_STEP_SUMMARY
+          echo "**Failed:** $FAILED" >> $GITHUB_STEP_SUMMARY
+          echo "**Skipped:** $SKIPPED" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload TestNG Reports
         if: always()
