@@ -51,7 +51,7 @@ jobs:
           echo "Skipped: $SKIPPED" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload TestNG Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: testng-reports
           path: target/surefire-reports
