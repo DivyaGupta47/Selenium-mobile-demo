@@ -1,7 +1,7 @@
 name: Run TestNG Tests
 
 on:
-  workflow_dispatch:  # allows manual run from GitHub UI
+  workflow_dispatch:  # Manual trigger from GitHub UI
 
 jobs:
   test:
@@ -14,7 +14,8 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
+          distribution: 'temurin'
 
       - name: Build & Run Tests
         run: mvn clean test
@@ -24,5 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testng-reports
-          path: |
-            target/surefire-reports/
+          path: target/surefire-reports/
