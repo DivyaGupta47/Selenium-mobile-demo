@@ -45,14 +45,23 @@ jobs:
               headless: 'new',
               args: ['--no-sandbox', '--disable-setuid-sandbox']
             });
+
             const page = await browser.newPage();
             const filePath = path.resolve(__dirname, 'test-output', 'ExtentReport.html');
             await page.goto(\`file://\${filePath}\`, { waitUntil: 'networkidle0' });
+
+            // Wait to ensure all JS (charts, logs) are fully rendered
+            await page.waitForTimeout(5000);
+
             await page.pdf({
               path: 'test-output/ExtentReport.pdf',
               format: 'A4',
-              printBackground: true
+              printBackground: true,
+              preferCSSPageSize: true,
+              margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' },
+              scale: 1
             });
+
             await browser.close();
           })();" > generate-pdf.js
 
