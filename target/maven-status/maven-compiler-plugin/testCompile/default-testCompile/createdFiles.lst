@@ -1,4 +1,11 @@
+apis\OrderVerificationAPI.class
 base\BaseTest.class
 tests\CreateOrderTest.class
+resource\ExtentManager.class
 tests\DashboardTest.class
+utils\LoginUtil.class
+tests\AdminOrderFlowTest.class
+utils\Config.class
 tests\LoginTest.class
+listeners\ExtentTestNGListener.class
+apis\OrderAPI.class

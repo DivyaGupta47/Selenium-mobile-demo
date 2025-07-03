@@ -1,9 +1,9 @@
-name: Run TestNG Tests
+name: Run TestNG Tests and Generate PDF Report
 
 on:
   workflow_dispatch:   # Manual trigger
   schedule:
-    - cron: '30 4 * * *'  # Runs at 10:00 AM IST (4:30 AM UTC)
+    - cron: '30 4 * * *'  # Runs at 4:30 AM UTC
 
 jobs:
   test:
@@ -19,21 +19,25 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build and Run Tests
-        run: mvn clean test -Dsurefire.useFile=false -Dsurefire.printSummary=true
+      - name: Install Maven
+        uses: actions/setup-java@v3
+        with:
+          maven-version: '3.8.1'
 
-      - name: Upload TestNG Reports (optional)
-        if: always()
+      - name: Build and Run Tests
+        run: mvn clean test
+
+      - name: Install wkhtmltopdf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wkhtmltopdf
+
+      - name: Convert HTML Report to PDF
+        run: |
+          wkhtmltopdf test-output/ExtentReport.html test-output/ExtentReport.pdf
+
+      - name: Upload PDF Report
         uses: actions/upload-artifact@v4
         with:
-          name: testng-reports
-          path: target/surefire-reports/
-
-      - name: Print test summary if exists
-        if: always()
-        run: |
-          if ls target/surefire-reports/*.txt 1> /dev/null 2>&1; then
-            cat target/surefire-reports/*.txt
-          else
-            echo "✅ All output printed inline. No .txt report found."
-          fi
+          name: test-pdf-report
+          path: test-output/ExtentReport.pdf

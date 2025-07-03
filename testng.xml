@@ -1,6 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Login Test Suite">
-    <test name="Login Test">
+<suite name="Admin Asignee Order Flow using UI Test Suite">
+
+	<listeners>
+		<listener class-name="listeners.ExtentTestNGListener" />
+	</listeners>
+	
+    <test name="Admin Asignee Order Flow using UI Test">
         <classes>
             <class name="tests.CreateOrderTest"/>
         </classes>
