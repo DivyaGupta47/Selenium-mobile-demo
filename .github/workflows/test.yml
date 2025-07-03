@@ -3,7 +3,7 @@ name: Run TestNG Tests and Generate PDF Report
 on:
   workflow_dispatch:   # Manual trigger
   schedule:
-    - cron: '30 4 * * *'  # Runs at 4:30 AM UTC
+    - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
 
 jobs:
   test:
@@ -22,19 +22,41 @@ jobs:
       - name: Install Maven
         run: |
           sudo apt-get update
-          sudo apt-get install -y maven  # Install Maven using apt
+          sudo apt-get install -y maven
 
       - name: Build and Run Tests
         run: mvn clean test
 
-      - name: Install wkhtmltopdf
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wkhtmltopdf
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Convert HTML Report to PDF
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Generate PDF from HTML using Puppeteer
         run: |
-          wkhtmltopdf test-output/ExtentReport.html test-output/ExtentReport.pdf
+          echo "const puppeteer = require('puppeteer');
+          const path = require('path');
+
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            const filePath = path.resolve(__dirname, 'test-output', 'ExtentReport.html');
+            await page.goto(\`file://\${filePath}\`, { waitUntil: 'networkidle0' });
+            await page.pdf({
+              path: 'test-output/ExtentReport.pdf',
+              format: 'A4',
+              printBackground: true
+            });
+            await browser.close();
+          })();" > generate-pdf.js
+
+          node generate-pdf.js
 
       - name: Upload PDF Report
         uses: actions/upload-artifact@v4
