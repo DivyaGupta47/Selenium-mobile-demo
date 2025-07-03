@@ -1,7 +1,7 @@
 name: Run TestNG Tests and Generate PDF Report
 
 on:
-  workflow_dispatch:   # Manual trigger
+  workflow_dispatch:   # Manually triggered
   schedule:
     - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
 
@@ -50,8 +50,8 @@ jobs:
             const filePath = path.resolve(__dirname, 'test-output', 'ExtentReport.html');
             await page.goto(\`file://\${filePath}\`, { waitUntil: 'networkidle0' });
 
-            // Wait to ensure all JS (charts, logs) are fully rendered
-            await page.waitForTimeout(5000);
+            // Wait 5 seconds for full rendering (charts, styles, animations)
+            await new Promise(resolve => setTimeout(resolve, 5000));
 
             await page.pdf({
               path: 'test-output/ExtentReport.pdf',
