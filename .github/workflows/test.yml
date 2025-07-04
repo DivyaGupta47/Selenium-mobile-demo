@@ -3,10 +3,10 @@ name: KestrelPro Manufacturing
 on:
   push:
     branches:
-      - main         # Triggers only if code is pushed to the main branch
-  workflow_dispatch: # Mannual Trigger
+      - main         # ✅ Runs on push to main branch
+  workflow_dispatch:  # ✅ Manual trigger
   schedule:
-    - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
+    - cron: '30 4 * * *'  # ✅ Scheduled daily at 4:30 AM UTC
 
 jobs:
   test:
@@ -78,10 +78,15 @@ jobs:
 
           node generate-pdf.js
 
-      - name: Upload PDF Reports
+      - name: Install PDF merge tool
+        run: sudo apt-get install -y poppler-utils
+
+      - name: Merge PDFs into Final Report
+        run: |
+          pdfunite test-output/ExtentReport_Tests.pdf test-output/ExtentReport_Dashboard.pdf test-output/ExtentReport_Final.pdf
+
+      - name: Upload Final Merged PDF Report
         uses: actions/upload-artifact@v4
         with:
-          name: test-pdf-reports
-          path: |
-            test-output/ExtentReport_Tests.pdf
-            test-output/ExtentReport_Dashboard.pdf
+          name: extent-final-report
+          path: test-output/ExtentReport_Final.pdf
