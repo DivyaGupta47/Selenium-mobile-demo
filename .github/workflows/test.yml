@@ -9,7 +9,8 @@ on:
     - cron: '30 4 * * *'  # ✅ Scheduled daily at 4:30 AM UTC
 
 jobs:
-  test:
+  kestrelpro-manufacturing:
+    name: KestrelPro Manufacturing
     runs-on: ubuntu-latest
 
     steps:
