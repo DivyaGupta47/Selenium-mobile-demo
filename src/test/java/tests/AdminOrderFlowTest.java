@@ -42,9 +42,9 @@ public class AdminOrderFlowTest {
 	String adminEmail = "automation@yopmail.com";
 	String adminPassword = "KestrelPro@123";
 	
-    String customerName = "Manveer Automation";
-    String assigneeEmail = "TestAutomation270@yopmail.com";
-    String firstName = "Test";
+    String customerName = "Manveer Automation"+ System.currentTimeMillis();
+    //String assigneeEmail = "TestAutomation270@yopmail.com";
+    //String firstName = "Test";
     String lastName = "Automation";
     String roleAssociate = "EMPLOYEE";
     String phone = "0123567891";
@@ -56,6 +56,10 @@ public class AdminOrderFlowTest {
     Integer stageIdToUpdate;
     List<Map<String, Object>> filteredStages1;
 
+    
+    String firstName = "TestUser_" + System.currentTimeMillis(); // Generates a unique name like TestUser_1720090812345
+    String assigneeEmail = firstName.toLowerCase() + "@yopmail.com"; // Ensure email is also unique
+    
     @BeforeClass
     public void setupSession() {
         String token = LoginUtil.performLogin(adminEmail,adminPassword);
@@ -135,6 +139,8 @@ public class AdminOrderFlowTest {
     public void addAndAssignUsers() {
     	ExtentTest test = ExtentTestNGListener.getTest();
         Response userResponse = UserAPI.createUserAssociate(assigneeEmail, firstName, lastName, roleAssociate, phone);
+        System.out.println("Assignee Name : " +firstName +"Last Name : " +lastName);
+        System.out.println("Assignee Email : " +assigneeEmail);
         Assert.assertEquals(userResponse.getStatusCode(), 200, "User creation failed!");
 
         userId = userResponse.jsonPath().getString("identity_id");
