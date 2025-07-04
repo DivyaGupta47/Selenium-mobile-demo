@@ -1,9 +1,9 @@
 name: Run TestNG Tests and Generate PDF Report
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:   # Manual trigger
   schedule:
-    - cron: '30 4 * * *'  # Daily at 4:30 AM UTC
+    - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
 
 jobs:
   test:
@@ -35,13 +35,11 @@ jobs:
       - name: Install Puppeteer
         run: npm install puppeteer
 
-      - name: Install PDF merge tool
-        run: sudo apt-get install -y poppler-utils
-
       - name: Generate PDF for both tabs using Puppeteer
         run: |
           echo "const puppeteer = require('puppeteer');
           const path = require('path');
+          const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
           (async () => {
             const browser = await puppeteer.launch({
@@ -52,7 +50,7 @@ jobs:
             const page = await browser.newPage();
             const filePath = path.resolve(__dirname, 'test-output', 'ExtentReport.html');
             await page.goto(\`file://\${filePath}\`, { waitUntil: 'networkidle0' });
-            await page.waitForTimeout(3000);
+            await delay(3000);
 
             // Save Tests tab
             await page.pdf({
@@ -61,9 +59,9 @@ jobs:
               printBackground: true
             });
 
-            // Click Dashboard tab icon
+            // Click Dashboard tab icon (bar-chart icon)
             await page.click('i.fa.fa-bar-chart');
-            await page.waitForTimeout(3000); // wait for animations
+            await delay(3000);
 
             // Save Dashboard tab
             await page.pdf({
@@ -77,12 +75,10 @@ jobs:
 
           node generate-pdf.js
 
-      - name: Merge both PDFs into one final report
-        run: |
-          pdfunite test-output/ExtentReport_Tests.pdf test-output/ExtentReport_Dashboard.pdf test-output/ExtentReport_Final.pdf
-
-      - name: Upload Final PDF Report
+      - name: Upload PDF Reports
         uses: actions/upload-artifact@v4
         with:
-          name: complete-test-report
-          path: test-output/ExtentReport_Final.pdf
+          name: test-pdf-reports
+          path: |
+            test-output/ExtentReport_Tests.pdf
+            test-output/ExtentReport_Dashboard.pdf
