@@ -1,4 +1,4 @@
-name: Run TestNG Tests and Generate PDF Report
+name: KestrelPro Manufacturing
 
 on:
   workflow_dispatch:   # Manual trigger
