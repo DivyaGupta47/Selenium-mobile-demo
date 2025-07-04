@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="9" passed="9" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-03T17:48:06 IST" name="Admin Order using API Test Suite" finished-at="2025-07-03T17:48:15 IST" duration-ms="9455">
+  <suite started-at="2025-07-04T15:15:22 IST" name="Default suite" finished-at="2025-07-04T15:15:43 IST" duration-ms="21311">
     <groups>
     </groups>
-    <test started-at="2025-07-03T17:48:06 IST" name="Admin Order Flow using API Test" finished-at="2025-07-03T17:48:15 IST" duration-ms="9455">
+    <test started-at="2025-07-04T15:15:22 IST" name="Default test" finished-at="2025-07-04T15:15:43 IST" duration-ms="21311">
       <class name="tests.AdminOrderFlowTest">
-        <test-method is-config="true" signature="setupSession()[pri:0, instance:tests.AdminOrderFlowTest@531f4093]" started-at="2025-07-03T17:48:06 IST" name="setupSession" finished-at="2025-07-03T17:48:12 IST" duration-ms="6165" status="PASS">
+        <test-method is-config="true" signature="setupSession()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:22 IST" name="setupSession" finished-at="2025-07-04T15:15:27 IST" duration-ms="5086" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setupSession -->
-        <test-method signature="createOrder()[pri:0, instance:tests.AdminOrderFlowTest@531f4093]" started-at="2025-07-03T17:48:12 IST" name="createOrder" finished-at="2025-07-03T17:48:15 IST" duration-ms="3204" status="PASS">
+        <test-method signature="createOrder()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:27 IST" name="createOrder" finished-at="2025-07-04T15:15:30 IST" duration-ms="3186" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createOrder -->
+        <test-method signature="splitOrder()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:30 IST" name="splitOrder" finished-at="2025-07-04T15:15:31 IST" depends-on-methods="tests.AdminOrderFlowTest.createOrder" duration-ms="155" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- splitOrder -->
+        <test-method signature="updateTAT()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:31 IST" name="updateTAT" finished-at="2025-07-04T15:15:33 IST" depends-on-methods="tests.AdminOrderFlowTest.splitOrder" duration-ms="2384" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateTAT -->
+        <test-method signature="addAndAssignUsers()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:33 IST" name="addAndAssignUsers" finished-at="2025-07-04T15:15:36 IST" depends-on-methods="tests.AdminOrderFlowTest.updateTAT" duration-ms="2931" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addAndAssignUsers -->
+        <test-method signature="addRemarks()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:36 IST" name="addRemarks" finished-at="2025-07-04T15:15:37 IST" depends-on-methods="tests.AdminOrderFlowTest.addAndAssignUsers" duration-ms="740" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addRemarks -->
+        <test-method signature="addAttachments()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:37 IST" name="addAttachments" finished-at="2025-07-04T15:15:37 IST" depends-on-methods="tests.AdminOrderFlowTest.addRemarks" duration-ms="790" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addAttachments -->
+        <test-method signature="completeStages()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:37 IST" name="completeStages" finished-at="2025-07-04T15:15:41 IST" depends-on-methods="tests.AdminOrderFlowTest.addAttachments" duration-ms="3252" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- completeStages -->
+        <test-method signature="verifyCompletion()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:41 IST" name="verifyCompletion" finished-at="2025-07-04T15:15:43 IST" depends-on-methods="tests.AdminOrderFlowTest.completeStages" duration-ms="2507" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyCompletion -->
+        <test-method signature="updateUser()[pri:0, instance:tests.AdminOrderFlowTest@3a7442c7]" started-at="2025-07-04T15:15:43 IST" name="updateUser" finished-at="2025-07-04T15:15:43 IST" depends-on-methods="tests.AdminOrderFlowTest.addAndAssignUsers, tests.AdminOrderFlowTest.verifyCompletion" duration-ms="182" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateUser -->
       </class> <!-- tests.AdminOrderFlowTest -->
-    </test> <!-- Admin Order Flow using API Test -->
-  </suite> <!-- Admin Order using API Test Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>
