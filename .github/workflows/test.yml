@@ -1,9 +1,9 @@
 name: Run TestNG Tests and Generate PDF Report
 
 on:
-  workflow_dispatch:   # Manually triggered
+  workflow_dispatch:
   schedule:
-    - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
+    - cron: '30 4 * * *'  # Daily at 4:30 AM UTC
 
 jobs:
   test:
@@ -35,7 +35,10 @@ jobs:
       - name: Install Puppeteer
         run: npm install puppeteer
 
-      - name: Generate PDF from HTML using Puppeteer
+      - name: Install PDF merge tool
+        run: sudo apt-get install -y poppler-utils
+
+      - name: Generate PDF for both tabs using Puppeteer
         run: |
           echo "const puppeteer = require('puppeteer');
           const path = require('path');
@@ -49,17 +52,24 @@ jobs:
             const page = await browser.newPage();
             const filePath = path.resolve(__dirname, 'test-output', 'ExtentReport.html');
             await page.goto(\`file://\${filePath}\`, { waitUntil: 'networkidle0' });
+            await page.waitForTimeout(3000);
 
-            // Wait 5 seconds for full rendering (charts, styles, animations)
-            await new Promise(resolve => setTimeout(resolve, 5000));
-
+            // Save Tests tab
             await page.pdf({
-              path: 'test-output/ExtentReport.pdf',
+              path: 'test-output/ExtentReport_Tests.pdf',
               format: 'A4',
-              printBackground: true,
-              preferCSSPageSize: true,
-              margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' },
-              scale: 1
+              printBackground: true
+            });
+
+            // Click Dashboard tab icon
+            await page.click('i.fa.fa-bar-chart');
+            await page.waitForTimeout(3000); // wait for animations
+
+            // Save Dashboard tab
+            await page.pdf({
+              path: 'test-output/ExtentReport_Dashboard.pdf',
+              format: 'A4',
+              printBackground: true
             });
 
             await browser.close();
@@ -67,8 +77,12 @@ jobs:
 
           node generate-pdf.js
 
-      - name: Upload PDF Report
+      - name: Merge both PDFs into one final report
+        run: |
+          pdfunite test-output/ExtentReport_Tests.pdf test-output/ExtentReport_Dashboard.pdf test-output/ExtentReport_Final.pdf
+
+      - name: Upload Final PDF Report
         uses: actions/upload-artifact@v4
         with:
-          name: test-pdf-report
-          path: test-output/ExtentReport.pdf
+          name: complete-test-report
+          path: test-output/ExtentReport_Final.pdf
