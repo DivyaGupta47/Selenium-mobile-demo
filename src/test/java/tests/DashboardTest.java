@@ -5,7 +5,15 @@ import org.testng.annotations.Test;
 import base.BaseTest;
 import pages.DashboardPage;
 import pages.LoginPage;
-
+/**
+ * Dashboard performs a count before and after creation of order using UI automation.
+ *
+ * Flow Overview:
+ * - Print count before order creation
+ * - Print count after order creation
+ * 
+ * Author: QA@47Billion
+ */
 public class DashboardTest extends BaseTest {
 
     LoginPage loginPage;

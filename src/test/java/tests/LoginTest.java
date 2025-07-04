@@ -8,7 +8,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-
+/**
+ * LoginTest performs a Admin asignee login using UI automation.
+ *
+ * Flow Overview:
+ * - Headless mode session created for chrome
+ * - Admin login
+ * 
+ * Author: QA@47Billion
+ */
 public class LoginTest {
     WebDriver driver;
     LoginPage loginPage;

@@ -1,7 +1,10 @@
 name: KestrelPro Manufacturing
 
 on:
-  workflow_dispatch:   # Manual trigger
+  push:
+    branches:
+      - main         # Triggers only if code is pushed to the main branch
+  workflow_dispatch: # Mannual Trigger
   schedule:
     - cron: '30 4 * * *'  # Runs daily at 4:30 AM UTC
 

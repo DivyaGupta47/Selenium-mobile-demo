@@ -9,7 +9,23 @@ import pages.DashboardPage;
 import pages.LoginPage;
 import pages.MyTaskFlowAssigneePage;
 import pages.ProductFlowQueuedPage;
-
+/**
+ * Admin-AsigneeOrderFlowTest performs a complete end-to-end test flow for the Admin-Asignee user using UI automation.
+ *
+ * Flow Overview:
+ * - Admin logs in and initiates a session
+ * - Creates a new order
+ * - Update TAT
+ * - Assign Asignee
+ * - Added Remarks
+ * - AddedAttachment
+ * - Admin logout
+ * - Assignee Login
+ * - Assignee complete the all stages 2 to 7
+ * - Verify on the complete task
+ * 
+ * Author: QA@47Billion
+ */
 public class CreateOrderTest extends BaseTest {
 
 	LoginPage loginPage;
