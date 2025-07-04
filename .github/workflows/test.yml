@@ -83,10 +83,10 @@ jobs:
 
       - name: Merge PDFs into Final Report
         run: |
-          pdfunite test-output/ExtentReport_Tests.pdf test-output/ExtentReport_Dashboard.pdf test-output/ExtentReport_Final.pdf
+          pdfunite test-output/ExtentReport_Tests.pdf test-output/ExtentReport_Dashboard.pdf test-output/KestrelManufacturingReport.pdf
 
       - name: Upload Final Merged PDF Report
         uses: actions/upload-artifact@v4
         with:
-          name: extent-final-report
-          path: test-output/ExtentReport_Final.pdf
+          name: KestrelManufacturingReport
+          path: test-output/KestrelManufacturingReport.pdf
