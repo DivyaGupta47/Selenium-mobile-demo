@@ -69,6 +69,13 @@
             <version>1.18.24</version> <!-- Latest Lombok version -->
             <scope>provided</scope>
         </dependency>
+        
+        	<!-- Apache POI for reading Excel -->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.3</version>
+    </dependency>
 
     </dependencies>
 
@@ -98,6 +105,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                         <suiteXmlFile>testngAdminFlow.xml</suiteXmlFile>
+                        <suiteXmlFile>testngReport.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <usedefaultlisteners>true</usedefaultlisteners>

@@ -1,8 +1,12 @@
 package tests;
 
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import base.BaseTest;
+import listeners.ExtentTestNGListener;
 import pages.DashboardPage;
 import pages.LoginPage;
 /**
@@ -14,6 +18,8 @@ import pages.LoginPage;
  * 
  * Author: QA@47Billion
  */
+
+@Listeners(ExtentTestNGListener.class)
 public class DashboardTest extends BaseTest {
 
     LoginPage loginPage;
@@ -30,6 +36,7 @@ public class DashboardTest extends BaseTest {
     
     @Test
     public void testDashboardCountsBefore() throws InterruptedException {
+    	ExtentTest test = ExtentTestNGListener.getTest();
         login();
         DashboardPage dashboard = new DashboardPage(driver);
         Thread.sleep(5000);
@@ -50,6 +57,7 @@ public class DashboardTest extends BaseTest {
     
     @Test
     public void testDashboardCountsAfter() throws InterruptedException {
+    	ExtentTest test = ExtentTestNGListener.getTest();
     	login();
         DashboardPage dashboard = new DashboardPage(driver);
         Thread.sleep(5000);
