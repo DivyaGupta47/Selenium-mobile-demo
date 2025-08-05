@@ -7,7 +7,7 @@
 	
     <test name="Admin Asignee Order Flow using UI Test">
         <classes>
-            <class name="tests.ReportValidationTest"/>
+            <class name="tests.ReportWithExcel"/>
         </classes>
     </test>
 </suite>

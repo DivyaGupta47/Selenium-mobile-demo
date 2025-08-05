@@ -10,6 +10,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import base.BaseTest;
 import resource.ExtentManager;
+
 /**
  * TestNG listener implementation for integrating ExtentReports into the test execution lifecycle.
  *
@@ -40,6 +41,16 @@ public class ExtentTestNGListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
         test.get().pass("Test passed");
     }
+
+	/*
+	 * @Override public void onTestFailure(ITestResult result) { WebDriver driver =
+	 * ((BaseTest) result.getInstance()).getDriver(); // Ensure BaseTest has
+	 * getDriver() String screenshotPath = ((BaseTest)
+	 * result.getInstance()).takeScreenshot(result.getMethod().getMethodName());
+	 * 
+	 * test.get().fail(result.getThrowable());
+	 * test.get().addScreenCaptureFromPath(screenshotPath); }
+	 */
     
     @Override
     public void onTestFailure(ITestResult result) {
@@ -50,7 +61,7 @@ public class ExtentTestNGListener implements ITestListener {
             String screenshotPath = base.takeScreenshot(result.getMethod().getMethodName());
             test.get().addScreenCaptureFromPath(screenshotPath);
         } else {
-            System.out.println("Test instance is not of type BaseTest skipping screenshot.");
+            System.out.println("Test instance is not of type BaseTest — skipping screenshot.");
         }
     }
 

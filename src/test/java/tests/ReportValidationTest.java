@@ -15,22 +15,32 @@ import base.BaseTest;
 import listeners.ExtentTestNGListener;
 import pages.LoginPage;
 import pages.ReportValidationPage;
-import utils.ExcelReader;
+import utils.ExcelReaderUI;
 
 @Listeners(ExtentTestNGListener.class)
 public class ReportValidationTest extends BaseTest  {
 	
     LoginPage loginPage;
-    String userName = "divyaadmin@yopmail.com";
+    String userName = "reportautomation@yopmail.com";
     String password = "KestrelPro@123";
 
     public void login()    
     {
+    	System.out.println("\n=========================================================");
+    	System.out.println("Starting Flow: REPORT ASSERTION FLOW TEST");
+    	System.out.println("=========================================================\n");
     	loginPage = new LoginPage(driver);
         loginPage.enterUsername(userName);
         loginPage.enterPassword(password);
         loginPage.clickSignIn();
     }
+	
+  /* @Test
+	public void ReportValidationTest() throws InterruptedException {
+    	login();
+		ReportValidationPage reportValidationPage = new ReportValidationPage(driver);				
+		reportValidationPage.ReportTableValidation();
+	}*/
     
     @Test
     public void compareReportUIAndExcelData() throws InterruptedException {
@@ -41,7 +51,7 @@ public class ReportValidationTest extends BaseTest  {
         ReportValidationPage page = new ReportValidationPage(driver);
 
         Map<String, String> uiData = page.getUIReportData(customer);
-        Map<String, String> excelData = ExcelReader.getCustomerData(customer);
+        Map<String, String> excelData = ExcelReaderUI.getCustomerData(customer);
 
         // Fields to skip (not available in UI)
         List<String> skipFields = Arrays.asList("Current Stage", "Organization Name");
@@ -58,7 +68,7 @@ public class ReportValidationTest extends BaseTest  {
         }
 
         System.out.println("All matched fields validated for: " + customer);
-        loginPage.signOutAdmin();
+        Thread.sleep(1000);
     }
 
     private String normalize(String value) {

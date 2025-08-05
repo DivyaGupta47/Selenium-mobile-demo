@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -17,19 +19,27 @@ import org.testng.annotations.BeforeMethod;
 public class BaseTest {
 
     protected WebDriver driver;
+    protected String downloadPath;
 
     @BeforeMethod
     public void setUp() {
 
+        downloadPath = System.getProperty("user.home") + "\\Downloads";
+
+        // Set Chrome download preferences
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadPath);
+        prefs.put("profile.default_content_settings.popups", 0);
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");  //  Required for GitHub Actions
-        options.addArguments("--no-sandbox");  //  Prevents crashing in CI
-        options.addArguments("--disable-dev-shm-usage");  //  Prevents memory issues
-        options.addArguments("--disable-gpu");  //  Optional but safe
+        options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
         options.addArguments("--remote-allow-origins=*");
-        
-       driver = new ChromeDriver(options);
-        //driver = new ChromeDriver();
+
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://freetrial-mf.kestrelpro.ai/");
     }
@@ -43,6 +53,10 @@ public class BaseTest {
 
     public WebDriver getDriver() {
         return driver;
+    }
+
+    public String getDownloadPath() {
+        return downloadPath;
     }
 
     public String takeScreenshot(String testName) {
@@ -60,5 +74,24 @@ public class BaseTest {
         }
 
         return destPath;
+    }
+
+    public File waitForExcelDownload(String downloadDir, int timeoutSeconds) {
+        File dir = new File(downloadDir);
+
+        int waited = 0;
+        while (waited < timeoutSeconds) {
+            File[] files = dir.listFiles((d, name) -> name.endsWith(".xlsx"));
+            if (files != null && files.length > 0) {
+                return files[0]; // Return the first Excel file found
+            }
+            try {
+                Thread.sleep(1000);
+                waited++;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        throw new RuntimeException("Excel file download timed out");
     }
 }

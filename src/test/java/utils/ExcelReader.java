@@ -3,28 +3,76 @@ package utils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ExcelReader {
 
-    public static Map<String, String> getCustomerData(String customerName) {
+    public static Map<String, String> getCustomerDataExcel(File file, String customerName) {
         Map<String, String> data = new LinkedHashMap<>();
 
-        try (FileInputStream fis = new FileInputStream("src/test/resources/reports/VasuAutomationReport.xlsx");
+        waitForFileReady(file);
+
+        if (file.getName().toLowerCase().endsWith(".csv")) {
+            readCSV(file, customerName, data);
+        } else if (file.getName().toLowerCase().endsWith(".xlsx")) {
+            readXLSX(file, customerName, data);
+        } else {
+            throw new RuntimeException("Unsupported file type: " + file.getName());
+        }
+
+        return data;
+    }
+
+    private static void readCSV(File file, String customerName, Map<String, String> data) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
+            String headerLine = br.readLine();
+            if (headerLine == null) return;
+
+            // Remove BOM if present
+            headerLine = headerLine.replace("\uFEFF", "");
+
+            String[] headers = headerLine.split(",");
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String nameValue = values[0].trim();
+
+                if (nameValue.equalsIgnoreCase(customerName.trim()) ||
+                    nameValue.toLowerCase().contains(customerName.trim().toLowerCase())) {
+
+                    for (int i = 0; i < headers.length && i < values.length; i++) {
+                        String headerKey = headers[i].replace("\uFEFF", "").trim(); // Ensure BOM removed
+                        data.put(headerKey, values[i].trim());
+                    }
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading CSV file: " + file.getAbsolutePath(), e);
+        }
+    }
+
+
+    private static void readXLSX(File file, String customerName, Map<String, String> data) {
+        try (FileInputStream fis = new FileInputStream(file);
              Workbook workbook = new XSSFWorkbook(fis)) {
 
             Sheet sheet = workbook.getSheetAt(0);
-            Row headerRow = sheet.getRow(0); // Headers in row 0
+            Row headerRow = sheet.getRow(0);
 
             for (Row row : sheet) {
                 if (row.getRowNum() == 0) continue;
 
-                Cell nameCell = row.getCell(0); // A = Customer Name
-                if (nameCell != null && nameCell.getStringCellValue().equalsIgnoreCase(customerName)) {
-                    for (int col = 0; col <= 32; col++) { // A (0) to AG (32)
+                String nameValue = getCellValueAsString(row.getCell(0)).trim();
+
+                if (nameValue.equalsIgnoreCase(customerName.trim()) ||
+                    nameValue.toLowerCase().contains(customerName.trim().toLowerCase())) {
+
+                    for (int col = 0; col <= headerRow.getLastCellNum() - 1; col++) {
                         String key = headerRow.getCell(col).getStringCellValue().trim();
                         String value = getCellValueAsString(row.getCell(col));
                         data.put(key, value);
@@ -32,12 +80,24 @@ public class ExcelReader {
                     break;
                 }
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error reading XLSX file: " + file.getAbsolutePath(), e);
         }
+    }
 
-        return data;
+    private static void waitForFileReady(File file) {
+        int retries = 5;
+        while (retries-- > 0) {
+            if (file.exists() && file.length() > 0) {
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    return;
+                } catch (IOException ignored) {}
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ignored) {}
+        }
+        throw new RuntimeException("File not ready: " + file.getAbsolutePath());
     }
 
     private static String getCellValueAsString(Cell cell) {
@@ -46,10 +106,8 @@ public class ExcelReader {
         switch (cell.getCellType()) {
             case STRING:
                 return cell.getStringCellValue().trim();
-
             case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    // Convert to MM/dd/yyyy (to match UI)
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                     return dateFormat.format(cell.getDateCellValue());
                 } else {
@@ -60,23 +118,18 @@ public class ExcelReader {
                         return String.valueOf(val);
                     }
                 }
-
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
-
             case FORMULA:
                 try {
                     return cell.getStringCellValue();
                 } catch (IllegalStateException e) {
                     return String.valueOf(cell.getNumericCellValue());
                 }
-
             case BLANK:
                 return "";
-
             default:
-                return cell.toString().trim();  // fallback for unexpected types
+                return cell.toString().trim();
         }
     }
-
 }

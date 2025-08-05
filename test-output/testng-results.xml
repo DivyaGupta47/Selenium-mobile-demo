@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-09T14:24:05 IST" name="Report Validation UI with Excel Flow using UI Test Suite" finished-at="2025-07-09T14:24:27 IST" duration-ms="22518">
+  <suite started-at="2025-08-04T17:19:33 IST" name="Default suite" finished-at="2025-08-04T17:19:59 IST" duration-ms="25312">
     <groups>
     </groups>
-    <test started-at="2025-07-09T14:24:05 IST" name="Admin Asignee Order Flow using UI Test" finished-at="2025-07-09T14:24:27 IST" duration-ms="22518">
-      <class name="tests.ReportValidationTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.ReportValidationTest@53de625d]" started-at="2025-07-09T14:24:05 IST" name="setUp" finished-at="2025-07-09T14:24:10 IST" duration-ms="4708" status="PASS">
+    <test started-at="2025-08-04T17:19:33 IST" name="Default test" finished-at="2025-08-04T17:19:59 IST" duration-ms="25312">
+      <class name="tests.ReportWithExcel">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.ReportWithExcel@2eae8e6e]" started-at="2025-08-04T17:19:34 IST" name="setUp" finished-at="2025-08-04T17:19:38 IST" duration-ms="4935" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="compareReportUIAndExcelData()[pri:0, instance:tests.ReportValidationTest@53de625d]" started-at="2025-07-09T14:24:10 IST" name="compareReportUIAndExcelData" finished-at="2025-07-09T14:24:27 IST" duration-ms="17194" status="PASS">
+        <test-method signature="compareReportUIAndExcelData()[pri:0, instance:tests.ReportWithExcel@2eae8e6e]" started-at="2025-08-04T17:19:38 IST" name="compareReportUIAndExcelData" finished-at="2025-08-04T17:19:58 IST" duration-ms="19703" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- compareReportUIAndExcelData -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.ReportValidationTest@53de625d]" started-at="2025-07-09T14:24:27 IST" name="tearDown" finished-at="2025-07-09T14:24:27 IST" duration-ms="510" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.ReportWithExcel@2eae8e6e]" started-at="2025-08-04T17:19:58 IST" name="tearDown" finished-at="2025-08-04T17:19:59 IST" duration-ms="599" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- tests.ReportValidationTest -->
-    </test> <!-- Admin Asignee Order Flow using UI Test -->
-  </suite> <!-- Report Validation UI with Excel Flow using UI Test Suite -->
+      </class> <!-- tests.ReportWithExcel -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

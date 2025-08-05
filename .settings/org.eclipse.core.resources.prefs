@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//src/test/java/tests/ReportWithExcel.java=UTF-8
+encoding//src/test/java/utils/ExcelDownloader.java=UTF-8
+encoding//src/test/java/utils/ExcelReader.java=UTF-8

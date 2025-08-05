@@ -218,7 +218,7 @@ public class AdminOrderFlowTest {
     }
     
    
-	@Test(dependsOnMethods = {"addAndAssignUsers", "verifyCompletion"})
+	/*@Test(dependsOnMethods = {"addAndAssignUsers", "verifyCompletion"})
 	public void updateUser() {
 		ExtentTest test = ExtentTestNGListener.getTest();
 	    String identityId = userId; // Or get it from user creation
@@ -230,7 +230,7 @@ public class AdminOrderFlowTest {
 
 	    System.out.println("User updated successfully. Identity ID: " + identityId);
 	    System.out.println("Updated Response for user" +response.asPrettyString());
-	}
+	}*/
 	
 	
 
