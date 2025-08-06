@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Admin Asignee Order Flow using UI Test Suite">
+<suite name="Hybrid Test Suite">
 
 	<listeners>
 		<listener class-name="listeners.ExtentTestNGListener" />
@@ -17,7 +17,7 @@
 		</classes>
 	</test>
 	
-	 <test name="Admin Asignee Order Flow using UI Test">
+	 <test name="Report Assertion Test">
         <classes>
             <class name="tests.ReportWithExcel"/>
         </classes>

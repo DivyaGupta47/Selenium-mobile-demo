@@ -112,4 +112,5 @@ public class CreateOrderPage {
         WebElement totalOrdersElement = totalOrdersCount;
         return Integer.parseInt(totalOrdersElement.getText());
     }
+
 }
